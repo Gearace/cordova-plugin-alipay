@@ -77,8 +77,20 @@
         orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
                        orderSpec, signedString, @"RSA"];
 
+        // [[AlipaySDK defaultService] payOrder:orderString fromScheme:fromUrlScheme callback:^(NSDictionary *resultDic) {
+        //     NSLog(@"reslut = %@",resultDic);
+        // }];
+
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:fromUrlScheme callback:^(NSDictionary *resultDic) {
             NSLog(@"reslut = %@",resultDic);
+            CDVPluginResult* pluginResult = nil;
+            NSString *resultStatus = [resultDic objectForKey:@"resultStatus"];
+            if ([resultStatus isEqualToString:@"9000"] || [resultStatus isEqualToString:@"8000"]){
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:resultStatus];
+            }else{
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:resultStatus];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
 
     }

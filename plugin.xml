@@ -16,6 +16,8 @@
 
   <preference name="PARTNER_ID"/>
   <preference name="SELLER_ACCOUNT"/>
+  <preference name="PRIVATE_KEY"/>
+
 
   <asset src="www/alipay.js" target="js/alipay.js"/>
 
@@ -41,6 +43,12 @@
         android:exported="false" android:screenOrientation="behind"
         android:windowSoftInputMode="adjustResize|stateHidden">
       </activity>
+      <activity
+         android:name="com.alipay.sdk.auth.AuthActivity"
+         android:configChanges="orientation|keyboardHidden|navigation"
+         android:exported="false"
+         android:screenOrientation="behind" >
+      </activity>
       <!-- alipay sdk end -->
     </config-file>
 
@@ -52,7 +60,7 @@
       <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     </config-file>
 
-    <source-file src="src/android/libs/alipaySDK-20150724.jar" target-dir="libs"/>
+    <source-file src="src/android/libs/alipaySDK-20151014.jar" target-dir="libs"/>
 
     <source-file src="src/android/AliPayPlugin.java" target-dir="src/wang/imchao/plugin/alipay"/>
     <source-file src="src/android/Base64.java" target-dir="src/wang/imchao/plugin/alipay"/>

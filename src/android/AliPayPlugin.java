@@ -46,9 +46,10 @@ public class AliPayPlugin extends CordovaPlugin {
             String subject = arguments.getString("subject");
             String body = arguments.getString("body");
             String price = arguments.getString("price");
-            String fromUrlScheme = arguments.getString("fromUrlScheme");
+            // String fromUrlScheme = arguments.getString("fromUrlScheme");
             String notifyUrl = arguments.getString("notifyUrl");
-            this.pay(tradeNo, subject, body, price, fromUrlScheme, notifyUrl);
+            //this.pay(tradeNo, subject, body, price, fromUrlScheme, notifyUrl);
+            this.payCallBack(tradeNo, subject, body, price, notifyUrl, callbackContext);
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
@@ -88,6 +89,73 @@ public class AliPayPlugin extends CordovaPlugin {
         });
     }
 
+    //改成回调写法,ionic不太适用UrlScheme
+    public void payCallBack(String tradeNo, String subject, String body, String price, String notifyUrl, final CallbackContext callbackContext) {
+        // 订单
+        String orderInfo = createRequestParameters(subject, body, price, tradeNo, notifyUrl);
+
+        // 对订单做RSA 签名
+        String sign = sign(orderInfo);
+        try {
+            // 仅需对sign 做URL编码
+            sign = URLEncoder.encode(sign, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            callbackContext.error("签名错误！");
+        }
+
+        // 完整的符合支付宝参数规范的订单信息
+        final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
+                + getSignType();
+
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(cordova.getActivity());
+                // 调用支付接口，获取支付结果
+                String notifyResult = alipay.pay(payInfo);
+                String[] resultParams = notifyResult.split(";");
+                String resultStatus = "";
+                String memo = "";
+                String result = "";
+
+                for (String resultParam : resultParams) {
+
+                    if (resultParam.startsWith("resultStatus")) {
+
+                        resultStatus = resultParam.substring(resultParam.indexOf("={") + 2, resultParam.lastIndexOf("}"));
+                        System.out.println(resultStatus);
+
+                        continue;
+
+                    }
+
+                    if (resultParam.startsWith("result")) {
+
+                        result = resultParam.substring(resultParam.indexOf("={") + 2, resultParam.lastIndexOf("}"));
+
+                        continue;
+
+                    }
+
+                    if (resultParam.startsWith("memo")) {
+
+                        memo = resultParam.substring(resultParam.indexOf("={") + 2, resultParam.lastIndexOf("}"));
+
+                        continue;
+
+                    }
+                }
+
+                if(resultStatus.equals("9000")||resultStatus.equals("8000")){
+                    callbackContext.success(resultStatus); //返回支付结果
+                }else{
+                    callbackContext.error(resultStatus); //返回支付结果
+                }
+            }
+        });
+    }
 
     /**
      * create the order info. 创建订单信息
