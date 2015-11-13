@@ -1,6 +1,6 @@
 # Cordova 支付宝支付插件
 
-fork后自用，修改为callback，不需要安装https://github.com/EddyVerbruggen/Custom-URL-scheme插件
+fork后自用，修改为callback，不需要安装https://github.com/EddyVerbruggen/Custom-URL-scheme插件，另外把私有key也改成直接用命令行添加
 
 还在开发中，待加入订单信息
 
@@ -76,4 +76,3 @@ cordova plugin add $CORDOVA_PLUGIN_DIR --variable PARTNER_ID=[你的商户PID可
 
 © 2015 Wang Chao. This code is distributed under the MIT license.
 
-cordova plugin add  ~/code/科多瓦插件/cordova-plugin-alipay --variable PARTNER_ID="2088111981444250" --variable SELLER_ACCOUNT="itshangcheng@163.com" --variable PRIVATE_KEY="MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAL5TAE9+bEUGBCHjZYJEEH3vYinZDSm1SbkQe8wfgpsHbIrbeaTpBfeFA3dCbb77nk9iyEAA5o3vB1rJrse42jdiogAg+YCzcXLDOpS7nHowkpqp+A3M1EcC9PKNwsG0v6AAc8zrwPd3Nl9zGf8t2TRww4LnLAqAMxJl8CSYHuJxAgMBAAECgYBo7hHpweWnWF3G4TwByczd4bDZKZWcPRrcMT5Pl7/GAR3SoJY8WUy03ly+z5z6AneRhQCqaNSzw+jmIPN/oWaM1tV+wYsFEeWyc612LIJWjHy2CfmhKyAJD1xPC/+y0z1cWoGFwvcM/3VBU2F1DAyMgximVEMTddTssLLsYaAzwQJBAOijv6JVu/yVsUuk8EVWbmVq8r9OUZshpLbvGcjpq81fpOUSDKWAHij26o8vvmPaHmo1d3JJY1G2zOLsT8mcPrUCQQDRb31KvFI2SULU95o+1f6J3RL31/4xofCprbgP0UzdFgPWN7hdLM/2vqSyPiNVIxpV/DG8+UVQt9NQ9+RrHa5NAkANeKX5LYPEPZrVqYhsS3P7FXVXFJ7vH8Sc/z17/+P98YLn7OKklsWoU5wDjJ02xQOr3Mq86HkC21YD8fEw2IZdAkEApdzDvzJRcYinkv3cfDMBeLFKWloGh8wWSmq3wF8jnlvXAgnyyme481KcIEUxujUooDwwL9bB3GEYy6DmlyZUaQJBAKaWWnCIUMZDR6IbWJ4I8hNU+3ZbD2WtfZVMyHwZ4PXaNvnIN/zXBmvRT4xcNyOpid1ut2rXuNs+3JmS4m8GL0k="
